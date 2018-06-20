@@ -1,0 +1,22 @@
+{
+  "name": "javascript-game-engine",
+  "version": "1.0.0",
+  "description": "javascript game engine",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "npm run dev-webpack &  npm run dev-serve",
+    "dev-webpack": "webpack -w",
+    "dev-serve": "webpack-serve --config webpack.config.js"
+  },
+  "author": "takeokunn",
+  "license": "MIT",
+  "devDependencies": {
+    "webpack": "^4.12.0",
+    "webpack-cli": "^3.0.3",
+    "webpack-serve": "^1.0.4"
+  },
+  "dependencies": {
+    "howler": "^2.0.12",
+    "pixi.js": "^4.8.1"
+  }
+}
