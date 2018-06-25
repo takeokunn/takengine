@@ -1,4 +1,5 @@
-const init_events_system = () => console.log('init_events_system');
+import { attack, animateable } from 'engine_components';
+import { audio, collision, event, input, meta, renderer, replay, tiles } from 'engine_systems';
 
 export const init_state = [
     {
@@ -8,12 +9,6 @@ export const init_state = [
             // renderer: renderer,
             stage: () => {},
             // stage: stage,
-        }
-    },
-    {
-        type: 'script',
-        opts: {
-            fn: init_events_system
         }
     },
     {
@@ -27,18 +22,6 @@ export const init_state = [
             // stage: stage,
             // loader: loader,
             // tilemap: tilemap
-        }
-    },
-    {
-        type: 'entity',
-        opts: () => {},
-        // opts: create_player
-    },
-    {
-        type: 'entity',
-        opts: {
-            fn: () => {}
-            // fn: create_enemy
         }
     },
     {
@@ -78,16 +61,14 @@ export const init_state = [
         type: 'system',
         opts: {
             uid: 'events',
-            fn: () => {}
-            // fn: event_system
+            fn: event.system
         }
     },
     {
         type: 'system',
         opts: {
             uid: 'keyboard_input',
-            fn: () => {}
-            // fn: keyboard_input_system
+            fn: input.system
         }
     },
     {
@@ -96,7 +77,7 @@ export const init_state = [
             uid: 'position',
             component: {
                 uid: 'position',
-                fn: () => {},
+                fn: state => state,
                 // fn: position,
                 subscriptions: ['position_change']
             }
@@ -106,8 +87,7 @@ export const init_state = [
         type: 'system',
         opts: {
             uid: 'meta',
-            fn: () => {}
-            // fn: meta_system
+            fn: meta.system
         }
     },
     {
@@ -116,7 +96,7 @@ export const init_state = [
             uid: 'controller',
             component: {
                 uid: 'controller',
-                fn: () => {},
+                fn: state => state,
                 // fn: react_to_input,
                 select_components: ['keyboard_input']
             }
@@ -126,24 +106,21 @@ export const init_state = [
         type: 'system',
         opts: {
             uid: 'tiles',
-            fn: () => {}
-            // fn: tile_system
+            fn: tiles.system
         }
     },
     {
         type: 'system',
         opts: {
             uid: 'render',
-            fn: () => {}
-            // fn: render_system
+            fn: renderer.system
         }
     },
     {
         type: 'system',
         opts: {
             uid: 'audio',
-            fn: () => {}
-            // fn: audio_system
+            fn: audio.system
         }
     },
     {
@@ -152,7 +129,7 @@ export const init_state = [
             uid: 'sprite',
             component: {
                 uid: 'sprite',
-                fn: () => {},
+                fn: state => state,
                 // fn: render_sprite,
                 select_components: ['position', 'animateable'],
                 cleanup_fn: () => {}
@@ -166,7 +143,7 @@ export const init_state = [
             uid: 'animate',
             component: {
                 uid: 'animateable',
-                fn: () => {},
+                fn: state => state,
                 // fn: animate,
                 select_components: ['action']
             }
@@ -178,7 +155,7 @@ export const init_state = [
             uid: 'text_sprite',
             component: {
                 uid: 'text_sprite',
-                fn: () => {},
+                fn: state => state,
                 // fn: render_text,
                 select_components: ['position', 'text'],
                 cleanup_fn: () => {}
@@ -192,7 +169,7 @@ export const init_state = [
             uid: 'text',
             component: {
                 uid: 'text',
-                fn: () => {},
+                fn: state => state,
                 // fn: text,
                 select_components: ['text_change']
             }
@@ -202,16 +179,14 @@ export const init_state = [
         type: 'system',
         opts: {
             uid: 'entity_collision',
-            fn: () => {},
-            // fn: mk_entity_collision_system
+            fn: collision.mk_entity_system
         }
     },
     {
         type: 'system',
         opts: {
             uid: 'tilemap_collision',
-            fn: () => {},
-            // fn: mk_tilemap_collision_system
+            fn: collision.mk_tilemap_system
         }
     },
     {
@@ -220,8 +195,7 @@ export const init_state = [
             uid: 'attack',
             component: {
                 uid: 'attack',
-                fn: () => {},
-                // fn: attack,
+                fn: attack.system,
                 select_components: ['position'],
                 subscriptions: ['action']
             }
@@ -233,7 +207,7 @@ export const init_state = [
             uid: 'damage',
             component: {
                 uid: 'damage',
-                fn: () => {},
+                fn: state => state,
                 // fn: damage,
                 select_components: ['position'],
                 subscriptions: ['collision']
@@ -246,7 +220,7 @@ export const init_state = [
             uid: 'ttl',
             component: {
                 uid: 'ttl',
-                fn: () => {},
+                fn: state => state,
                 // fn: update_ttl,
             }
         }
@@ -257,7 +231,7 @@ export const init_state = [
             uid: 'movement',
             component: {
                 uid: 'moveable',
-                fn: () => {},
+                fn: state => state,
                 // fn: move,
                 subscriptions: ['move_change', 'collision']
             }
@@ -267,8 +241,7 @@ export const init_state = [
         type: 'system',
         opts: {
             uid: 'replay',
-            fn: () => {},
-            // fn: replay_system
+            fn: replay.system
         }
     },
 ];

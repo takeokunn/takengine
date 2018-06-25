@@ -1,5 +1,4 @@
 ## javascript game engine
-[github.io](https://takeokunn.github.io/only-css-game/public/)
 
 ### how to use
 ```sh

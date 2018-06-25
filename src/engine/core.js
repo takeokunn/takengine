@@ -1,24 +1,39 @@
-import * as ecs from './ecs';
+import * as ecs from 'engine/ecs';
 
 const mk_state = {
-    entity: state => ecs.mk_entity(state),
-    entity_remove: state => ecs.rm_entity(state),
-    component: state => ecs.mk_component(state),
-    system: state => ecs.mk_system(state),
-    scene: state => ecs.mk_scene(state),
-    current_scene: state => ecs.mk_current_scene(state),
-    renderer: state => ecs.mk_renderer(state),
-    tilemap: state => ecs.mk_tiles_from_tilemap(state),
-    script: state => state.opts.fn()
+    entity: (state, opts) => ecs.mk_entity(state, opts),
+    entity_remove: (state, opts) => ecs.rm_entity(state, opts),
+    system: (state, opts) => ecs.mk_system(state, opts),
+    scene: (state, opts) => ecs.mk_scene(state, opts),
+    current_scene: (state, opts) => ecs.mk_current_scene(state, opts),
+    renderer: (state, opts) => ecs.mk_renderer(state, opts),
+    tilemap: (state, opts) => ecs.mk_tiles_from_tilemap(state, opts)
 };
 
-const mk_state_dispatcher = state => mk_state[state.type](state);
+const mk_state_dispatcher = (state, spec) => mk_state[spec.type](state, spec.opts);
 
-const next_state = game_state => {
-    console.log(game_state);
-    return game_state;
+const next_state = game_states => {
+    const scene_id = game_states.game.scene_id;
+    const update_fn = game_states.game.update_fns[scene_id];
+    return update_fn(game_states);
 };
 
-export const mk_game_state = states => states.map(state => mk_state_dispatcher(state));
+export const mk_game_state = game_states => {
+    const new_state = game_states.reduce((state, spec) => mk_state_dispatcher(state, spec), {});
+    const scene_id = new_state.game.scene_id;
+    const systems = new_state.scenes[scene_id];
+    const system_fns = ecs.get_system_fns(new_state, systems);
+    const update_fn = tmp_state => system_fns.reduce((status, system_fn) => system_fn(status), tmp_state);
+    return {
+        ...new_state,
+        game: {
+            ...new_state.game,
+            update_fns: {
+                ...new_state.game.update_fns,
+                [scene_id]: update_fn
+            }
+        }
+    };
+};
 
-export const game_loop = game_state => requestAnimationFrame(game_loop.bind(this, next_state(game_state)));
+export const game_loop = game_states => requestAnimationFrame(game_loop.bind(this, next_state(game_states)));

@@ -1,1 +1,4 @@
-const load = (dir, audios, callback) => {};
+export const system = state => {
+    return state;
+};
+
