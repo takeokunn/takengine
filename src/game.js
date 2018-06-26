@@ -1,3 +1,4 @@
+import { player, enemy } from 'entities';
 import { attack, animateable } from 'engine_components';
 import { audio, collision, event, input, meta, renderer, replay, tiles } from 'engine_systems';
 
@@ -12,7 +13,7 @@ export const init_state = [
         }
     },
     {
-        type: 'entity',
+        type: 'tilemap',
         opts: {
             renderer: () => {},
             stage: () => {},
@@ -23,6 +24,14 @@ export const init_state = [
             // loader: loader,
             // tilemap: tilemap
         }
+    },
+    {
+        type: 'entity',
+        opts: player.create('player1')
+    },
+    {
+        type: 'entity',
+        opts: enemy.create('enemy1')
     },
     {
         type: 'scene',

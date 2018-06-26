@@ -1,5 +1,4 @@
 export const mk_entity_system = state => {
-    console.log(state)
     return state;
 };
 

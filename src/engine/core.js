@@ -23,7 +23,7 @@ export const mk_game_state = game_states => {
     const scene_id = new_state.game.scene_id;
     const systems = new_state.scenes[scene_id];
     const system_fns = ecs.get_system_fns(new_state, systems);
-    const update_fn = tmp_state => system_fns.reduce((status, system_fn) => system_fn(status), tmp_state);
+    const update_fn = old_state => system_fns.reduce((status, system_fn) => system_fn(status), old_state);
     return {
         ...new_state,
         game: {
