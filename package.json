@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "howler": "^2.0.12",
+    "immutable": "^3.8.2",
     "pixi.js": "^4.8.1"
   }
 }

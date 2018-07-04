@@ -1,4 +1,9 @@
 export * as animateable from './animateable';
 export * as attack from './attack';
-export * as movable from './movable';
+export * as controllerable from './controllerable';
+export * as damage from './damage';
+export * as ephemeral from './ephemeral';
+export * as moveable from './moveable';
 export * as position from './position';
+export * as renderable from './renderable';
+export * as text from './text';
