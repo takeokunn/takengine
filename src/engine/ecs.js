@@ -1,6 +1,6 @@
 import * as ev from 'engine/events';
 
-const entities_with_component = (game_state, component_id) => {
+export const entities_with_component = (game_state, component_id) => {
     const state = game_state.components.hasOwnProperty(component_id)? game_state.components[component_id] : {};
     return state.hasOwnProperty('entities')? state.entities : [];
 };
@@ -42,6 +42,7 @@ const system_next_state_and_events = (game_state, component_id) => {
         const component_state = component_states[entity_id];
         const context = get_component_context(game_state, event_queue, component, entity_id);
         const next_comp_state = component_fn(entity_id, component_state, context);
+        const events = next_comp_state.hasOwnProperty('events')? next_comp_state.events : [];
         return {
             ...accum,
             state: {
