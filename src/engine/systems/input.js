@@ -19,11 +19,23 @@ const keyup = e => {
 const init_input = () => {
     document.addEventListener("keydown", keydown);
     document.addEventListener("keyup", keyup);
-    key_input = { ...initialize_key_input(), is_initialize: true };
+    key_input = { is_initialize: true, ...initialize_key_input() };
 };
 
 export const system = state => {
-    const entity_ids = ecs.entities_with_component(state, 'text');
+    const entity_ids = ecs.entities_with_system(state, 'keyboard_input');
     !key_input.is_initialize && init_input();
-    return state;
+    return entity_ids.reduce((accum, entity_id) => ({
+        ...accum,
+        state: {
+            ...accum.state,
+            key_input: {
+                ...accum.state.key_input,
+                [entity_id]: {
+                    ...ecs.get_state_key_input_entity(accum, entity_id),
+                    key_input: key_input
+                }
+            }
+        }
+    }), state);
 };

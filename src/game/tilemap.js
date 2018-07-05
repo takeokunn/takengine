@@ -1,15 +1,12 @@
-export const tilemap_state = [
+export const tilemap_state = (renderer, stage, loader) => ([
     {
         type: 'tilemap',
         opts: {
-            renderer: () => {},
-            stage: () => {},
-            loader: () => {},
+            renderer: renderer,
+            stage: stage,
+            loader: loader,
             tilemap: () => {}
-            // renderer: renderer,
-            // stage: stage,
-            // loader: loader,
             // tilemap: tilemap
         }
     }
-];
+]);

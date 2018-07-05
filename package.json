@@ -25,6 +25,7 @@
     "howler": "^2.0.12",
     "immutable": "^3.8.2",
     "keycode": "^2.2.0",
-    "pixi.js": "^4.8.1"
+    "pixi.js": "^4.8.1",
+    "stats.js": "^0.17.0"
   }
 }

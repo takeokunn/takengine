@@ -1,14 +1,13 @@
-export const create = (uid) => {
+export const create = uid => {
     return {
         uid: uid,
+        systems: [],
         components: [
             {
                 uid: 'position',
-                state: state => state
             },
             {
                 uid: 'text',
-                state: state => state
             },
         ]
     }

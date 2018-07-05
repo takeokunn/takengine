@@ -47,4 +47,4 @@ export const mk_game_state = game_states => {
     };
 };
 
-export const game_loop = game_states => requestAnimationFrame(game_loop.bind(this, next_state(game_states)));
+export const game_loop = (game_states, middleware) => requestAnimationFrame(game_loop.bind(this, middleware(next_state, game_states), middleware));

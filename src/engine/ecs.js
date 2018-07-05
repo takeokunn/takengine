@@ -5,7 +5,12 @@ export const entities_with_component = (game_state, component_id) => {
     return state.hasOwnProperty('entities')? state.entities : [];
 };
 
-export const get_system_fns = (state, system_ids) => system_ids.map(system_id => state.systems[system_id]);
+export const entities_with_system = (game_state, system_id) => {
+    const state = game_state.systems.hasOwnProperty(system_id)? game_state.systems[system_id] : {};
+    return state.hasOwnProperty('entities')? state.entities : [];
+};
+
+export const get_system_fns = (state, system_ids) => system_ids.map(system_id => state.systems[system_id].fn);
 
 const get_all_component_state = (game_state, component_id) => {
     const state = game_state.hasOwnProperty('state')? game_state.state : {};
@@ -29,6 +34,11 @@ const get_component_context = (state, queue, component, entity_id) => {
         [comp]: get_component_state(state, component, entity_id)
     });
     return component.select_components.reduce(cb, { inbox: messages })
+};
+
+export const get_state_key_input_entity = (game_state, entity_id) => {
+    const key_input = game_state.state.hasOwnProperty('key_input')? game_state.state.key_input : {};
+    return key_input.hasOwnProperty('entity_id')? key_input[entity_id] : {};
 };
 
 const system_next_state_and_events = (game_state, component_id) => {
@@ -69,7 +79,9 @@ const mk_component = (state, opts) => {
         ...state,
         systems: {
             ...state.systems,
-            [opts.uid]: mk_system_fn(opts.component.uid)
+            [opts.uid]: {
+                fn: mk_system_fn(opts.component.uid)
+            }
         },
         components: {
             ...state.components,
@@ -89,7 +101,16 @@ const mk_pure_system = (state, opts) => {
         ...state,
         systems: {
             ...state.systems,
-            [opts.uid]: opts.fn
+            [opts.uid]: {
+                fn: opts.fn
+            }
+        },
+        components: {
+            ...state.components,
+            [opts.uid]: {
+                ...state.components[opts.uid],
+                fn: opts.fn,
+            }
         }
     };
 };
@@ -140,8 +161,33 @@ const component_state_from_spec = entity_id => (state, component) => {
     };
 };
 
+const system_state_from_spec = entity_id => (state, system) => {
+    const system_uid = system.uid;
+    const entity_entity_id = state.entities.hasOwnProperty(entity_id)
+        ? [...state.entities[entity_id], system_uid]
+        : [system_uid];
+    const systems_entities = state.systems[system_uid].hasOwnProperty('entities')
+        ? [...state.systems[system_uid].entities, entity_id]
+        : [entity_id];
+    return {
+        ...state,
+        entities: {
+            ...state.entities,
+            [entity_id]: entity_entity_id
+        },
+        systems: {
+            ...state.systems,
+            [system_uid]: {
+                ...state.systems[system_uid],
+                entities: systems_entities,
+            }
+        }
+    };
+}
+
 export const mk_entity = (state, opts) => {
-    return opts.components.reduce((accum, component) => component_state_from_spec(opts.uid)(accum, component), state);
+    const tmp_state = opts.systems.reduce((accum, system) => system_state_from_spec(opts.uid)(accum, system), state);
+    return opts.components.reduce((accum, component) => component_state_from_spec(opts.uid)(accum, component), tmp_state);
 };
 
 export const rm_entity = (state, opts) => ({ ...state });
