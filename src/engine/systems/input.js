@@ -1,5 +1,5 @@
 import * as keycode from 'keycode';
-import * as ecs from 'engine/ecs';
+import { ecs } from 'engine_core';
 
 let key_input = { is_initialize: false };
 const initialize_key_input = () => Object.keys(keycode.codes).reduce((accum, code) => ({ ...accum, [code]: false }), key_input);

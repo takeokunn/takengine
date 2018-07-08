@@ -1,4 +1,4 @@
-import * as ecs from 'engine/ecs';
+import * as ecs from './ecs';
 import { tiles } from 'engine_systems';
 
 const initial_game_state = {
@@ -24,6 +24,7 @@ const mk_state = {
 const mk_state_dispatcher = (state, spec) => mk_state[spec.type](state, spec.opts);
 
 const next_state = game_states => {
+    console.log(game_states)
     const scene_id = game_states.game.scene_id;
     const update_fn = game_states.game.update_fns[scene_id];
     return update_fn(game_states);
@@ -47,4 +48,4 @@ export const mk_game_state = game_states => {
     };
 };
 
-export const game_loop = (game_states, middleware) => requestAnimationFrame(game_loop.bind(this, middleware(next_state, game_states), middleware));
+export const game_loop = (state, middleware) => middleware(next_state, state);

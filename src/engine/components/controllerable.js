@@ -18,5 +18,8 @@ export const react_to_input = (entity_id, component_state, messages) => {
     // const last_input_state = { input_state: component_state };
     // const move_action = input_move(keyboard_input);
     // const attack_action = input_attack(keyboard_input);
-    return component_state;
+    return {
+        component_state: component_state,
+        events: [],
+    };
 }

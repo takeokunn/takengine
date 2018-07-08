@@ -1,12 +1,8 @@
-import { player, enemy } from 'entities';
+import { player } from 'entities';
 
-export const entity_state = (stage, loader) => ([
+export const entity_state = [
     {
         type: 'entity',
-        opts: player.create(stage, loader, 'player1', 20, 20, 1000, 0, 0)
+        opts: player.create('player1')
     },
-    {
-        type: 'entity',
-        opts: enemy.create('enemy1')
-    },
-]);
+];

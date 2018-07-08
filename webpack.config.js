@@ -12,10 +12,14 @@ module.exports = {
     },
     resolve: {
         alias: {
+            // for game
+            game: path.resolve(__dirname, 'src/game'),
             entities: path.resolve(__dirname, 'src/entities'),
-            engine: path.resolve(__dirname, 'src/engine'),
+            // for engine
+            engine_core: path.resolve(__dirname, 'src/engine/core'),
             engine_systems: path.resolve(__dirname, 'src/engine/systems'),
             engine_components: path.resolve(__dirname, 'src/engine/components'),
+            engine_utils: path.resolve(__dirname, 'src/engine/utils'),
         }
     },
     output: {

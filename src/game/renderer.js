@@ -1,9 +1,9 @@
-export const renderer_state = (renderer, stage) => ([
+export const renderer_state = renderer =>([
     {
         type: 'renderer',
         opts: {
             renderer: renderer,
-            stage: stage,
+            stage: () => {}
         }
     }
 ]);

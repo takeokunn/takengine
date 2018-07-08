@@ -1,6 +1,32 @@
 import { position, renderable } from 'engine_components';
 
-export const create = (stage, loader, uid, pos_x, pos_y, pos_z, map_x, map_y) => {
+const glsl = {
+    frag: `
+        precision mediump float;
+        uniform vec4 color;
+        void main () {
+            gl_FragColor = color;
+        }`,
+    vert: `
+        precision mediump float;
+        attribute vec2 position;
+        void main () {
+            gl_Position = vec4(position, 0, 1);
+        }`,
+    attributes: {
+        position: [
+            [-1, 0],
+            [0, -1],
+            [1, 1]
+        ]
+    },
+    uniforms: {
+        color: [1, 0, 0, 1]
+    },
+    count: 3
+};
+
+export const create = uid => {
     return {
         uid: uid,
         systems: [
@@ -11,11 +37,7 @@ export const create = (stage, loader, uid, pos_x, pos_y, pos_z, map_x, map_y) =>
         components: [
             {
                 uid: 'sprite',
-                state: renderable.mk_sprite_state(stage, loader, '/img/icon.png')
-            },
-            {
-                uid: 'position',
-                state: position.mk_position_state(pos_x, pos_y, pos_z, map_x, map_y)
+                state: glsl
             },
         ]
     }

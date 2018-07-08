@@ -7,13 +7,12 @@ import { scene_state } from './scene';
 import { system_state } from './system';
 import { tilemap_state } from './tilemap';
 
-export const init_state = (renderer, stage, loader) => {
-    return [
-        ...component_state,
-        ...system_state,
-        ...entity_state(stage, loader),
-        ...renderer_state(renderer, stage),
-        ...scene_state,
-        ...tilemap_state(renderer, stage, loader)
-    ];
-}
+export const init_state = renderer => ([
+    ...component_state,
+    ...system_state,
+    ...entity_state,
+    ...renderer_state(renderer),
+    ...scene_state,
+    ...tilemap_state
+]);
+
