@@ -23,7 +23,7 @@ const init_input = () => {
 };
 
 export const system = state => {
-    const entity_ids = ecs.entities_with_system(state, 'keyboard_input');
+    const entity_ids = ecs.get.system_system_id_entities(state, 'keyboard_input');
     !key_input.is_initialize && init_input();
     return entity_ids.reduce((accum, entity_id) => ({
         ...accum,
@@ -32,7 +32,7 @@ export const system = state => {
             key_input: {
                 ...accum.state.key_input,
                 [entity_id]: {
-                    ...ecs.get_state_key_input_entity(accum, entity_id),
+                    ...ecs.get.state_key_input_entity(accum, entity_id),
                     key_input: key_input
                 }
             }

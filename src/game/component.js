@@ -6,7 +6,6 @@ export const component_state = [
         opts: {
             uid: 'position',
             component: {
-                uid: 'position',
                 fn: position.fn,
                 select_components: [],
                 subscriptions: ['position_change'],
@@ -19,7 +18,6 @@ export const component_state = [
         opts: {
             uid: 'controller',
             component: {
-                uid: 'controller',
                 fn: controllerable.react_to_input,
                 select_components: ['keyboard_input'],
                 subscriptions: [],
@@ -32,7 +30,6 @@ export const component_state = [
         opts: {
             uid: 'sprite',
             component: {
-                uid: 'sprite',
                 fn: renderable.render_sprite,
                 select_components: ['position', 'animateable'],
                 subscriptions: [],
@@ -45,7 +42,6 @@ export const component_state = [
         opts: {
             uid: 'animate',
             component: {
-                uid: 'animateable',
                 fn: animateable.animate,
                 select_components: ['action'],
                 subscriptions: [],
@@ -58,7 +54,6 @@ export const component_state = [
         opts: {
             uid: 'text_sprite',
             component: {
-                uid: 'text_sprite',
                 fn: renderable.render_text,
                 select_components: ['position', 'text'],
                 subscriptions: [],
@@ -71,7 +66,6 @@ export const component_state = [
         opts: {
             uid: 'text',
             component: {
-                uid: 'text',
                 fn: text.fn,
                 select_components: ['text_change'],
                 subscriptions: [],
@@ -84,7 +78,6 @@ export const component_state = [
         opts: {
             uid: 'attack',
             component: {
-                uid: 'attack',
                 fn: attack.fn,
                 select_components: ['position'],
                 subscriptions: ['action'],
@@ -97,7 +90,6 @@ export const component_state = [
         opts: {
             uid: 'damage',
             component: {
-                uid: 'damage',
                 fn: damage.fn,
                 select_components: ['position'],
                 subscriptions: ['collision'],
@@ -110,7 +102,6 @@ export const component_state = [
         opts: {
             uid: 'ttl',
             component: {
-                uid: 'ttl',
                 fn: ephemeral.update_ttl,
                 select_components: [],
                 subscriptions: [],
@@ -123,7 +114,6 @@ export const component_state = [
         opts: {
             uid: 'movement',
             component: {
-                uid: 'moveable',
                 fn: moveable.fn,
                 select_components: [],
                 subscriptions: ['move_change', 'collision'],

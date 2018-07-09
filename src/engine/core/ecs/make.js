@@ -1,57 +1,28 @@
-import * as ev from './events';
+import * as get from './get';
+import * as ev from '../events';
 
-export const entities_with_component = (game_state, component_id) => {
-    const state = game_state.components.hasOwnProperty(component_id)? game_state.components[component_id] : {};
-    return state.hasOwnProperty('entities')? state.entities : []
-};
-
-export const entities_with_system = (game_state, system_id) => {
-    const state = game_state.systems.hasOwnProperty(system_id)? game_state.systems[system_id] : {};
-    return state.hasOwnProperty('entities')? state.entities : [];
-};
-
-export const get_system_fns = (state, system_ids) => system_ids.map(system_id => state.systems[system_id].fn);
-
-const get_all_component_state = (game_state, component_id) => {
-    const state = game_state.hasOwnProperty('state')? game_state.state : {};
-    return state.hasOwnProperty(component_id)? state[component_id] : {};
-};
-const get_component = (game_state, component_id) => {
-    const state_components = game_state.hasOwnProperty('components')? game_state.components : {};
-    return state_components.hasOwnProperty(component_id)? state_components[component_id] : {};
-};
-
-const get_component_state = (game_state, component_id, entity_id) => {
-    const state = game_state.hasOwnProperty('state')? game_state.state : {};
-    const state_component_id = state.hasOwnProperty(component_id)? state.component_id : {};
-    return state_component_id.hasOwnProperty(entity_id)? state_component_id.entity_id : {};
-};
-
+/**
+ * for system and components
+ */
 const get_component_context = (state, queue, component, entity_id) => {
-    const messages = ev.get_subscribed_events(queue, entity_id, component.subscriptions);
+    const messages = ev.get_subscribed(queue, entity_id, component.subscriptions);
     const cb = (context, comp) => ({
         ...context,
-        [comp]: get_component_state(state, component, entity_id)
+        [comp]: get.state_component_id_entity_id(state, component, entity_id)
     });
     return component.select_components.reduce(cb, { inbox: messages })
 };
 
-export const get_state_key_input_entity = (game_state, entity_id) => {
-    const key_input = game_state.state.hasOwnProperty('key_input')? game_state.state.key_input : {};
-    return key_input.hasOwnProperty('entity_id')? key_input[entity_id] : {};
-};
-
 const system_next_state_and_events = (game_state, component_id) => {
-    const entity_ids = entities_with_component(game_state, component_id);
-    const component_states = get_all_component_state(game_state, component_id);
-    const component = get_component(game_state, component_id);
-    const component_fn = component.fn;
-    const event_queue = game_state.hasOwnProperty('events')? game_state.events.queue : [];
+    const entity_ids = get.component_component_id_entities(game_state, component_id);
+    const component_states = get.state_component_id(game_state, component_id);
+    const component = get.component_component_id(game_state, component_id);
+    const event_queue = get.events_queue(game_state);
 
     const cb = (accum, entity_id) => {
         const now_component_state = component_states[entity_id];
         const context = get_component_context(game_state, event_queue, component, entity_id);
-        const { component_state, events } = component_fn(entity_id, now_component_state, context);
+        const { component_state, events } = component.fn(entity_id, now_component_state, context);
         return {
             ...accum,
             state: {
@@ -71,7 +42,7 @@ const system_next_state_and_events = (game_state, component_id) => {
 const mk_system_fn = component_id => now_state => {
     const state = system_next_state_and_events(now_state, component_id);
     return state;
-    // return ev.emit_events(state, events);
+    // return ev.emit(state, events);
 };
 
 const mk_component = (state, opts) => {
@@ -80,13 +51,13 @@ const mk_component = (state, opts) => {
         systems: {
             ...state.systems,
             [opts.uid]: {
-                fn: mk_system_fn(opts.component.uid)
+                fn: mk_system_fn(opts.uid)
             }
         },
         components: {
             ...state.components,
-            [opts.component.uid]: {
-                ...state.components[opts.component.uid],
+            [opts.uid]: {
+                ...state.components[opts.uid],
                 fn: opts.component.fn,
                 subscriptions: opts.component.subscriptions,
                 select_components: opts.component.select_components,
@@ -115,14 +86,17 @@ const mk_pure_system = (state, opts) => {
     };
 };
 
+export const mk_system = (state, opts) => {
+    return opts.component? mk_component(state, opts) : mk_pure_system(state, opts);
+};
+
+/**
+ * for entities
+ */
 const system_state_from_spec = entity_id => (state, system) => {
     const system_uid = system.uid;
-    const entity_entity_id = state.entities.hasOwnProperty(entity_id)
-        ? [...state.entities[entity_id], system_uid]
-        : [system_uid];
-    const systems_entities = state.systems[system_uid].hasOwnProperty('entities')
-        ? [...state.systems[system_uid].entities, entity_id]
-        : [entity_id];
+    const entity_entity_id = [...get.entities_entity_id(state, entity_id), system_uid];
+    const systems_entities = [...get.system_system_id_entities(state, system_uid), entity_id];
     return {
         ...state,
         entities: {
@@ -140,9 +114,9 @@ const system_state_from_spec = entity_id => (state, system) => {
 }
 
 const mk_component_state = (game_state, component_id, entity_id, init_component_state = {}) => {
-    const state = game_state.hasOwnProperty('state')? game_state.state : {};
-    const component_id_status = state.hasOwnProperty(component_id)? state[component_id] : {};
-    const entity_id_status = component_id_status.hasOwnProperty(entity_id)? component_id_status[entity_id] : {};
+    const state = game_state.state;
+    const component_id_status = get.state_component_id(game_state, component_id);
+    const entity_id_status = get.state_component_id_entity_id(game_state, component_id, entity_id);
     return {
         ...game_state,
         state: {
@@ -160,15 +134,10 @@ const mk_component_state = (game_state, component_id, entity_id, init_component_
 
 const component_state_from_spec = entity_id => (state, component) => {
     const component_uid = component.uid;
-    const component_state = component.state;
+    const component_state = component.state || {};
     const new_state = mk_component_state(state, component_uid, entity_id, component_state)
-    const entity_entity_id = new_state.entities.hasOwnProperty(entity_id)
-        ? [...new_state.entities[entity_id], component_uid]
-        : [component_uid];
-    const comopnent_entities = new_state.components[component_uid].hasOwnProperty('entities')
-        ? [...new_state.components[component_uid].entities, entity_id]
-        : [entity_id];
-
+    const entity_entity_id = [...get.entities_entity_id(new_state, entity_id), component_uid];
+    const comopnent_entities = [...get.component_component_id_entities(new_state, component_uid), entity_id];
     return {
         ...new_state,
         entities: {
@@ -192,10 +161,9 @@ export const mk_entity = (state, opts) => {
 
 export const rm_entity = (state, opts) => ({ ...state });
 
-export const mk_system = (state, opts) => {
-    return opts.component? mk_component(state, opts) : mk_pure_system(state, opts);
-};
-
+/**
+ * for scene
+ */
 export const mk_scene = (state, opts) => {
     return {
         ...state,
@@ -216,6 +184,9 @@ export const mk_current_scene = (state, opts) => {
     };
 };
 
+/**
+ * for renderer
+ */
 export const mk_renderer = (state, opts) => {
     return {
         ...state,

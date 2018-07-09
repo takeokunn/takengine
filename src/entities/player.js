@@ -1,44 +1,34 @@
+import { regl } from 'engine_utils';
 import { position, renderable } from 'engine_components';
 
-const glsl = {
-    frag: `
-        precision mediump float;
-        uniform vec4 color;
-        void main () {
-            gl_FragColor = color;
-        }`,
-    vert: `
-        precision mediump float;
-        attribute vec2 position;
-        void main () {
-            gl_Position = vec4(position, 0, 1);
-        }`,
-    attributes: {
-        position: [
-            [-1, 0],
-            [0, -1],
-            [1, 1]
-        ]
-    },
-    uniforms: {
-        color: [1, 0, 0, 1]
-    },
-    count: 3
-};
-
 export const create = uid => {
+    const entity_position = position.mk_position_state(-0.9, 0.0, 0.02, 0.15);
     return {
         uid: uid,
         systems: [
             {
                 uid: 'keyboard_input'
             },
+            {
+                uid: 'render'
+            },
         ],
         components: [
             {
-                uid: 'sprite',
-                state: glsl
+                uid: 'sprite'
             },
+            {
+                uid: 'controller'
+            },
+            {
+                uid: 'position',
+                state: {
+                    aabb: {
+                        c: entity_position.x,
+                        r: entity_position.y,
+                    }
+                }
+            }
         ]
     }
 };
