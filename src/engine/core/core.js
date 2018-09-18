@@ -24,7 +24,6 @@ const mk_state = {
 const mk_state_dispatcher = (state, spec) => mk_state[spec.type](state, spec.opts);
 
 const next_state = game_states => {
-    console.log(game_states)
     const scene_id = game_states.game.scene_id;
     const update_fn = game_states.game.update_fns[scene_id];
     return update_fn(game_states);
@@ -48,4 +47,4 @@ export const mk_game_state = game_states => {
     };
 };
 
-export const game_loop = (state, middleware) => middleware(next_state, state);
+export const game_loop = (state, middleware) => requestAnimationFrame(game_loop.bind(this, middleware(next_state, state), middleware));

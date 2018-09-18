@@ -1,8 +1,7 @@
-import { regl } from 'engine_utils';
+import { pixi } from 'engine_utils';
 import { position, renderable } from 'engine_components';
 
-export const create = uid => {
-    const entity_position = position.mk_position_state(-0.9, 0.0, 0.02, 0.15);
+export const create = (uid, loader, resource, stage) => {
     return {
         uid: uid,
         systems: [
@@ -11,23 +10,16 @@ export const create = uid => {
             },
             {
                 uid: 'render'
-            },
+            }
         ],
         components: [
             {
-                uid: 'sprite'
-            },
-            {
-                uid: 'controller'
+                uid: 'sprite',
+                state: renderable.mk_sprite_state(loader, stage, resource.name)
             },
             {
                 uid: 'position',
-                state: {
-                    aabb: {
-                        c: entity_position.x,
-                        r: entity_position.y,
-                    }
-                }
+                state: position.mk_position_state(20, 20, 0, 0, 0)
             }
         ]
     }

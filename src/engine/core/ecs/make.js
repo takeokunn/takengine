@@ -8,7 +8,7 @@ const get_component_context = (state, queue, component, entity_id) => {
     const messages = ev.get_subscribed(queue, entity_id, component.subscriptions);
     const cb = (context, comp) => ({
         ...context,
-        [comp]: get.state_component_id_entity_id(state, component, entity_id)
+        [comp]: get.state_component_id_entity_id(state, comp, entity_id)
     });
     return component.select_components.reduce(cb, { inbox: messages })
 };
@@ -40,9 +40,8 @@ const system_next_state_and_events = (game_state, component_id) => {
 };
 
 const mk_system_fn = component_id => now_state => {
-    const state = system_next_state_and_events(now_state, component_id);
-    return state;
-    // return ev.emit(state, events);
+    const new_state = system_next_state_and_events(now_state, component_id);
+    return ev.emit_events(new_state);
 };
 
 const mk_component = (state, opts) => {

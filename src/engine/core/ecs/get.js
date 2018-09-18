@@ -32,7 +32,7 @@ export const state_component_id = (game_state, component_id) => {
 
 export const state_component_id_entity_id = (game_state, component_id, entity_id) => {
     const state_component_id = game_state.state.hasOwnProperty(component_id)? game_state.state[component_id] : {};
-    return state_component_id.hasOwnProperty(entity_id)? state_component_id.entity_id : {};
+    return state_component_id.hasOwnProperty(entity_id)? state_component_id[entity_id] : {};
 };
 
 export const state_key_input_entity = (game_state, entity_id) => {

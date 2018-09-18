@@ -1,3 +1,5 @@
+import * as ecs from './ecs';
+
 export const mk = (msg, selectors) => {
     return {
         event_id: selectors[0],
@@ -6,8 +8,19 @@ export const mk = (msg, selectors) => {
     }
 };
 
-export const emit = (state, events) => {
-    return state;
+/**
+ * TODO: Fix
+ */
+export const emit_events = state => {
+    const all_queues = ecs.get.events_queue(state);
+    const new_queue = [];
+    return {
+        ...state,
+        events: {
+            ...state.events,
+            queue: new_queue
+        }
+    };
 };
 
 export const get_subscribed = (queue, entity_id, selectors_coll) => {
