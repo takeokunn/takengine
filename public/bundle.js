@@ -2409,7 +2409,7 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\nvar keycode_movement = {\n    W: { action: 'walk', direction: 'up' },\n    S: { action: 'walk', direction: 'down' },\n    A: { action: 'walk', direction: 'left' },\n    D: { action: 'walk', direction: 'right' }\n};\nvar keycode_action = {\n    J: { action: 'fireball' },\n    H: { action: 'spear' }\n};\n\nvar input_move = function input_move(input_state) {};\n\nvar input_attack = function input_attack(input_state) {};\n\nvar react_to_input = exports.react_to_input = function react_to_input(entity_id, component_state, messages) {\n    var keyboard_input = messages.keyboard_input;\n    // const last_input_state = { input_state: component_state };\n    // const move_action = input_move(keyboard_input);\n    // const attack_action = input_attack(keyboard_input);\n    return {\n        component_state: component_state,\n        events: []\n    };\n};\n\n//# sourceURL=webpack:///./src/engine/components/controllerable.js?");
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\nvar keycode_movement = {\n    W: { action: 'walk', direction: 'up' },\n    S: { action: 'walk', direction: 'down' },\n    A: { action: 'walk', direction: 'left' },\n    D: { action: 'walk', direction: 'right' }\n};\n\nvar input_move = function input_move(input_state) {};\n\nvar input_attack = function input_attack(input_state) {};\n\nvar react_to_input = exports.react_to_input = function react_to_input(entity_id, component_state, messages) {\n    var keyboard_input = messages.keyboard_input;\n    console.log(keyboard_input);\n    // const last_input_state = { input_state: component_state };\n    // const move_action = input_move(keyboard_input);\n    // const attack_action = input_attack(keyboard_input);\n    return {\n        component_state: component_state,\n        events: []\n    };\n};\n\n//# sourceURL=webpack:///./src/engine/components/controllerable.js?");
 
 /***/ }),
 
@@ -2457,7 +2457,7 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\nvar fn = exports.fn = function fn(entity_id, component_state, messages) {\n    return {\n        component_state: component_state,\n        events: []\n    };\n};\n\n//# sourceURL=webpack:///./src/engine/components/moveable.js?");
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\nvar mk_moveable_state = exports.mk_moveable_state = function mk_moveable_state(move_rate, direction) {\n    return {\n        offset_x: 0,\n        offset_y: 0,\n        move_rate: move_rate,\n        direction: direction\n    };\n};\n\nvar fn = exports.fn = function fn(entity_id, component_state, messages) {\n    console.log(component_state);\n    return {\n        component_state: component_state,\n        events: []\n    };\n};\n\n//# sourceURL=webpack:///./src/engine/components/moveable.js?");
 
 /***/ }),
 
@@ -2733,7 +2733,7 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\nexports.create = undefined;\n\nvar _engine_utils = __webpack_require__(/*! engine_utils */ \"./src/engine/utils/index.js\");\n\nvar _engine_components = __webpack_require__(/*! engine_components */ \"./src/engine/components/index.js\");\n\nvar create = exports.create = function create(uid, loader, resource, stage) {\n    return {\n        uid: uid,\n        systems: [{\n            uid: 'keyboard_input'\n        }, {\n            uid: 'render'\n        }],\n        components: [{\n            uid: 'sprite',\n            state: _engine_components.renderable.mk_sprite_state(loader, stage, resource.name)\n        }, {\n            uid: 'position',\n            state: _engine_components.position.mk_position_state(20, 20, 0, 0, 0)\n        }]\n    };\n};\n\n//# sourceURL=webpack:///./src/entities/player.js?");
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\nexports.create = undefined;\n\nvar _engine_utils = __webpack_require__(/*! engine_utils */ \"./src/engine/utils/index.js\");\n\nvar _engine_components = __webpack_require__(/*! engine_components */ \"./src/engine/components/index.js\");\n\nvar create = exports.create = function create(uid, loader, resource, stage) {\n    return {\n        uid: uid,\n        systems: [{\n            uid: 'keyboard_input'\n        }, {\n            uid: 'render'\n        }],\n        components: [{\n            uid: 'sprite',\n            state: _engine_components.renderable.mk_sprite_state(loader, stage, resource.name)\n        }, {\n            uid: 'position',\n            state: _engine_components.position.mk_position_state(20, 20, 0, 0, 0)\n        }, {\n            uid: 'moveable',\n            state: _engine_components.moveable.mk_moveable_state(4, 'down')\n        }]\n    };\n};\n\n//# sourceURL=webpack:///./src/entities/player.js?");
 
 /***/ }),
 

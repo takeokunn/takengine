@@ -1,5 +1,5 @@
 import { pixi } from 'engine_utils';
-import { position, renderable } from 'engine_components';
+import { position, renderable, moveable } from 'engine_components';
 
 export const create = (uid, loader, resource, stage) => {
     return {
@@ -20,7 +20,11 @@ export const create = (uid, loader, resource, stage) => {
             {
                 uid: 'position',
                 state: position.mk_position_state(20, 20, 0, 0, 0)
-            }
+            },
+            {
+                uid: 'moveable',
+                state: moveable.mk_moveable_state(4, 'down')
+            },
         ]
     }
 };
