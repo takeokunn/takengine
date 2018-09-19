@@ -8,7 +8,6 @@ export const mk_moveable_state = (move_rate, direction) => {
 };
 
 export const fn = (entity_id, component_state, messages) => {
-    console.log(component_state)
     return {
         component_state: component_state,
         events: [],

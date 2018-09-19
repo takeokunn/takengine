@@ -15,6 +15,7 @@ const mk_state = {
     entity: (state, opts) => ecs.make.mk_entity(state, opts),
     entity_remove: (state, opts) => ecs.make.rm_entity(state, opts),
     system: (state, opts) => ecs.make.mk_system(state, opts),
+    component: (state, opts) => ecs.make.mk_component(state, opts),
     scene: (state, opts) => ecs.make.mk_scene(state, opts),
     current_scene: (state, opts) => ecs.make.mk_current_scene(state, opts),
     renderer: (state, opts) => ecs.make.mk_renderer(state, opts),

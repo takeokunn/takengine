@@ -44,7 +44,7 @@ const mk_system_fn = component_id => now_state => {
     return ev.emit_events(new_state);
 };
 
-const mk_component = (state, opts) => {
+export const mk_component = (state, opts) => {
     return {
         ...state,
         systems: {
@@ -59,6 +59,7 @@ const mk_component = (state, opts) => {
                 ...state.components[opts.uid],
                 fn: opts.component.fn,
                 subscriptions: opts.component.subscriptions,
+                select_systems: opts.component.select_systems,
                 select_components: opts.component.select_components,
                 cleanup_fn: opts.component.cleanup_fn,
             }
@@ -66,7 +67,7 @@ const mk_component = (state, opts) => {
     };
 };
 
-const mk_pure_system = (state, opts) => {
+export const mk_system = (state, opts) => {
     return {
         ...state,
         systems: {
@@ -83,10 +84,6 @@ const mk_pure_system = (state, opts) => {
             }
         }
     };
-};
-
-export const mk_system = (state, opts) => {
-    return opts.component? mk_component(state, opts) : mk_pure_system(state, opts);
 };
 
 /**
