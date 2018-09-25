@@ -8,14 +8,15 @@ const get_component_context = (state, queue, component, entity_id) => {
     const messages = ev.get_subscribed(queue, entity_id, component.subscriptions);
     const cb = (context, comp) => ({
         ...context,
-        [comp]: get.state_component_id_entity_id(state, comp, entity_id)
+        [comp]: get.state_component_component_id_entity_id(state, comp, entity_id)
     });
-    return component.select_components.reduce(cb, { inbox: messages })
+    const component_context = component.select_components.reduce(cb, { inbox: messages });
+    return component.select_systems.reduce((context, sys) => ({ ...context }), component_context);
 };
 
 const system_next_state_and_events = (game_state, component_id) => {
     const entity_ids = get.component_component_id_entities(game_state, component_id);
-    const component_states = get.state_component_id(game_state, component_id);
+    const component_states = get.state_component_component_id(game_state, component_id);
     const component = get.component_component_id(game_state, component_id);
     const event_queue = get.events_queue(game_state);
 
@@ -25,10 +26,6 @@ const system_next_state_and_events = (game_state, component_id) => {
         const { component_state, events } = component.fn(entity_id, now_component_state, context);
         return {
             ...accum,
-            state: {
-                ...accum.state,
-                [entity_id]: component_state
-            },
             events: {
                 ...accum.events,
                 queue: [...accum.events.queue, ...events]
@@ -39,20 +36,14 @@ const system_next_state_and_events = (game_state, component_id) => {
     return entity_ids.reduce(cb, game_state);
 };
 
-const mk_system_fn = component_id => now_state => {
-    const new_state = system_next_state_and_events(now_state, component_id);
+const mk_system_fn = system_id => now_state => {
+    const new_state = system_next_state_and_events(now_state, system_id);
     return ev.emit_events(new_state);
 };
 
 export const mk_component = (state, opts) => {
     return {
         ...state,
-        systems: {
-            ...state.systems,
-            [opts.uid]: {
-                fn: mk_system_fn(opts.uid)
-            }
-        },
         components: {
             ...state.components,
             [opts.uid]: {
@@ -74,13 +65,6 @@ export const mk_system = (state, opts) => {
             ...state.systems,
             [opts.uid]: {
                 fn: opts.fn
-            }
-        },
-        components: {
-            ...state.components,
-            [opts.uid]: {
-                ...state.components[opts.uid],
-                fn: opts.fn,
             }
         }
     };
@@ -111,17 +95,21 @@ const system_state_from_spec = entity_id => (state, system) => {
 
 const mk_component_state = (game_state, component_id, entity_id, init_component_state = {}) => {
     const state = game_state.state;
-    const component_id_status = get.state_component_id(game_state, component_id);
-    const entity_id_status = get.state_component_id_entity_id(game_state, component_id, entity_id);
+    const component = game_state.state.component;
+    const component_id_status = get.state_component_component_id(game_state, component_id);
+    const entity_id_status = get.state_component_component_id_entity_id(game_state, component_id, entity_id);
     return {
         ...game_state,
         state: {
             ...state,
-            [component_id]: {
-                ...component_id_status,
-                [entity_id]: {
-                    ...entity_id_status,
-                    ...init_component_state
+            component: {
+                ...component,
+                [component_id]: {
+                    ...component_id_status,
+                    [entity_id]: {
+                        ...entity_id_status,
+                        ...init_component_state
+                    }
                 }
             }
         }
@@ -155,8 +143,6 @@ export const mk_entity = (state, opts) => {
     return opts.components.reduce((accum, component) => component_state_from_spec(opts.uid)(accum, component), tmp_state);
 };
 
-export const rm_entity = (state, opts) => ({ ...state });
-
 /**
  * for scene
  */
@@ -165,7 +151,10 @@ export const mk_scene = (state, opts) => {
         ...state,
         scenes: {
             ...state.scenes,
-            [opts.uid]: opts.systems
+            [opts.uid]: {
+                systems: opts.systems,
+                components: opts.components
+            }
         }
     };
 };

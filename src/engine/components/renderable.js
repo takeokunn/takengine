@@ -12,19 +12,17 @@ export const mk_sprite_state = (loader, stage, img_path) => {
 };
 
 export const render_sprite = (entity_id, component_state, messages) => {
-    const sprite = component_state.sprite;
-    const animateable = messages.animateable;
-    const position = messages.position;
-    set_position(sprite, position);
-    return {
-        component_state: component_state,
-        events: []
-    };
+    return component_state;
+    // const sprite = component_state.sprite;
+    // const animateable = messages.animateable;
+    // const position = messages.position;
+    // set_position(sprite, position);
+    // return {
+    //     component_state: component_state,
+    //     events: []
+    // };
 }
 
 export const render_text = (entity_id, component_state, messages) => {
-    return {
-        component_state: component_state,
-        events: [],
-    };
+    return component_state;
 }

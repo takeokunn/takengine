@@ -11,24 +11,19 @@ export const scene_state = [
             uid: 'default',
             systems: [
                 'keyboard_input',
-                'controller',
                 'entity_collision',
                 'tilemap_collision',
+                'audio',
+                'render',
+            ],
+            components: [
+                'controller',
                 'movement',
                 'position',
                 'attack',
                 'damage',
                 'ttl',
-                'tiles',
-                'replay',
-                'meta',
-                'animate',
-                'sprite',
-                'text',
-                'text_sprite',
-                'audio',
-                'render',
-                'events',
+                'sprite'
             ]
         }
     }

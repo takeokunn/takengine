@@ -7,7 +7,7 @@ const initial_game_state = {
     events: { queue: [] },
     game: {},
     scenes: {},
-    state: {},
+    state: { component: {}, system: {} },
     systems: {},
 };
 
@@ -33,9 +33,19 @@ const next_state = game_states => {
 export const mk_game_state = game_states => {
     const new_state = game_states.reduce((state, spec) => mk_state_dispatcher(state, spec), initial_game_state);
     const scene_id = new_state.game.scene_id;
-    const systems = new_state.scenes[scene_id];
+
+    const systems = new_state.scenes[scene_id].systems;
     const system_fns = ecs.get.system_fns(new_state, systems);
-    const update_fn = old_state => system_fns.reduce((status, system_fn) => system_fn(status), old_state);
+
+    const components = new_state.scenes[scene_id].components;
+    const component_fns = ecs.get.component_fns(new_state, components);
+
+    const update_fn = old_state => {
+        const system_state = system_fns.reduce((status, system_fn) => system_fn(status), old_state);
+        const component_state = component_fns.reduce((status, component_fn) => component_fn(status), system_state);
+        return component_state;
+    };
+
     return {
         ...new_state,
         game: {
