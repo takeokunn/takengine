@@ -11,9 +11,17 @@ export const component_component_id_entities = (game_state, component_id) => {
     return state.hasOwnProperty('entities')? state.entities : []
 };
 
+export const component_update_fn = (state, component_ids) => {
+    return component_ids.map(component_id => state.components[component_id].update_fn);
+};
+
 /**
  * for system
  */
+export const system_system_id = (game_state, system_id) => {
+    return game_state.systems.hasOwnProperty(system_id)? game_state.systems[system_id] : {};
+};
+
 export const system_system_id_entities = (game_state, system_id) => {
     const state = game_state.systems.hasOwnProperty(system_id)? game_state.systems[system_id] : {};
     return state.hasOwnProperty('entities')? state.entities : [];
@@ -23,15 +31,16 @@ export const system_fns = (state, system_ids) => {
     return system_ids.map(system_id => state.systems[system_id].fn);
 };
 
-export const component_fns = (state, component_ids) => {
-    return component_ids.map(component_id => state.components[component_id].fn);
-};
-
 /**
  * for state
  */
 export const state_system_system_id = (game_state, system_id) => {
     return game_state.state.system.hasOwnProperty(system_id)? game_state.state.system[system_id] : {};
+};
+
+export const state_system_system_id_entity_id = (game_state, system_id, entity_id) => {
+    const state_system_id =  game_state.state.system.hasOwnProperty(system_id)? game_state.state.system[system_id] : {};
+    return state_system_id.hasOwnProperty(entity_id)? state_system_id[entity_id] : {};
 };
 
 export const state_component_component_id = (game_state, component_id) => {

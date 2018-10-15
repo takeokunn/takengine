@@ -1,6 +1,6 @@
-export * as animateable from './animateable';
+export * as animate from './animate';
 export * as attack from './attack';
-export * as controllerable from './controllerable';
+export * as controller from './controller';
 export * as damage from './damage';
 export * as ephemeral from './ephemeral';
 export * as moveable from './moveable';

@@ -10,19 +10,12 @@ export const scene_state = [
         opts: {
             uid: 'default',
             systems: [
-                'keyboard_input',
-                'entity_collision',
-                'tilemap_collision',
-                'audio',
-                'render',
+                'key_input',
+                'render'
             ],
             components: [
                 'controller',
-                'movement',
                 'position',
-                'attack',
-                'damage',
-                'ttl',
                 'sprite'
             ]
         }

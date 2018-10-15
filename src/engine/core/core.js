@@ -38,12 +38,11 @@ export const mk_game_state = game_states => {
     const system_fns = ecs.get.system_fns(new_state, systems);
 
     const components = new_state.scenes[scene_id].components;
-    const component_fns = ecs.get.component_fns(new_state, components);
+    const component_fns = ecs.get.component_update_fn(new_state, components);
 
-    const update_fn = old_state => {
-        const system_state = system_fns.reduce((status, system_fn) => system_fn(status), old_state);
-        const component_state = component_fns.reduce((status, component_fn) => component_fn(status), system_state);
-        return component_state;
+    const update_fn = game_state => {
+        const system_state = system_fns.reduce((status, system_fn) => system_fn(status), game_state);
+        return component_fns.reduce((status, component_fn) => component_fn(status), system_state);
     };
 
     return {

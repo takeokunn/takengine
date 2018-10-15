@@ -1,4 +1,4 @@
-import { animateable, attack, controllerable, damage, ephemeral, moveable, position, renderable, text } from 'engine_components';
+import { animate, attack, controller, damage, ephemeral, moveable, position, renderable, text } from 'engine_components';
 
 export const component_state = [
     {
@@ -6,10 +6,10 @@ export const component_state = [
         opts: {
             uid: 'position',
             component: {
-                fn: state => state,
+                fn: position.fn,
                 select_systems: [],
-                select_components: [],
-                subscriptions: ['position_change'],
+                select_components: ['controller'],
+                subscriptions: [],
                 cleanup_fn: () => {}
             }
         }
@@ -19,8 +19,8 @@ export const component_state = [
         opts: {
             uid: 'controller',
             component: {
-                fn: state => state,
-                select_systems: ['keyboard_input'],
+                fn: controller.react_to_input,
+                select_systems: ['key_input'],
                 select_components: [],
                 subscriptions: [],
                 cleanup_fn: () => {}
@@ -32,9 +32,9 @@ export const component_state = [
         opts: {
             uid: 'sprite',
             component: {
-                fn: state => state,
+                fn: renderable.sprite_fn,
                 select_systems: [],
-                select_components: ['position', 'animate'],
+                select_components: ['position'],
                 subscriptions: [],
                 cleanup_fn: () => {}
             }
@@ -45,7 +45,7 @@ export const component_state = [
         opts: {
             uid: 'animate',
             component: {
-                fn: state => state,
+                fn: animate.fn,
                 select_systems: [],
                 select_components: ['action'],
                 subscriptions: [],

@@ -4,14 +4,6 @@ import { position, renderable, moveable } from 'engine_components';
 export const create = (uid, loader, resource, stage) => {
     return {
         uid: uid,
-        systems: [
-            {
-                uid: 'keyboard_input'
-            },
-            {
-                uid: 'render'
-            }
-        ],
         components: [
             {
                 uid: 'sprite',
@@ -22,9 +14,9 @@ export const create = (uid, loader, resource, stage) => {
                 state: position.mk_position_state(20, 20, 0, 0, 0)
             },
             {
-                uid: 'moveable',
-                state: moveable.mk_moveable_state(4, 'down')
-            },
+                uid: 'controller',
+                state: {}
+            }
         ]
     }
 };

@@ -11,7 +11,7 @@ export const system_state = [
     {
         type: 'system',
         opts: {
-            uid: 'keyboard_input',
+            uid: 'key_input',
             fn: input.system
         }
     },
