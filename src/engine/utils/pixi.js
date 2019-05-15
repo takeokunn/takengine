@@ -2,7 +2,7 @@ import * as PIXI from 'pixi.js'
 
 export const initialize_renderer = (width, height, background_color) => {
     const app = new PIXI.autoDetectRenderer(width, height, { backgroundColor : background_color });
-    document.body.appendChild(app.view);
+    document.getElementById("app").appendChild(app.view);
     return app;
 };
 

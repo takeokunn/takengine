@@ -15,8 +15,8 @@ const mk_text = (stage, str) => {
         fill: "white"
     });
     const message = pixi.mk_text(str, style);
-    message.x = 120;
-    message.y = 100;
+    message.x = 330;
+    message.y = 250;
     stage.addChild(message)
 }
 
@@ -25,7 +25,6 @@ export const mk_stages = () => {
     const main = new pixi.mk_stage();
     const result = new pixi.mk_stage();
     mk_text(start, "start");
-    mk_text(main, "main");
     mk_text(result, "result");
     return { start, main, result };
 };

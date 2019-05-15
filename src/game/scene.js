@@ -2,7 +2,7 @@ export const scene_state = stage => ([
     {
         type: 'current_scene',
         opts: {
-            uid: 'result'
+            uid: 'start'
         }
     },
     {
@@ -14,11 +14,7 @@ export const scene_state = stage => ([
                 'key_input',
                 'render'
             ],
-            components: [
-                // 'controller',
-                // 'position',
-                // 'sprite'
-            ],
+            components: []
         }
     },
     {
@@ -30,8 +26,7 @@ export const scene_state = stage => ([
                 'key_input',
                 'render'
             ],
-            components: [
-            ],
+            components: []
         }
     },
     {

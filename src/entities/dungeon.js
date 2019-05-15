@@ -11,7 +11,7 @@ export const create = (uid, loader, resource, stage) => {
             },
             {
                 uid: 'position',
-                state: position.mk_position_state(0, 0, 0, 0, 0)
+                state: position.mk_position_state(0, 0)
             },
             {
                 uid: 'controller',

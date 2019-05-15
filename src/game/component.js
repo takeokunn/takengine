@@ -60,7 +60,7 @@ export const component_state = [
             component: {
                 fn: state => state,
                 select_systems: [],
-                select_components: ['text_change'],
+                select_components: [],
                 subscriptions: [],
                 cleanup_fn: () => {}
             }
