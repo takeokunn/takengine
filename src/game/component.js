@@ -1,4 +1,4 @@
-import { animate, attack, controller, damage, ephemeral, moveable, position, renderable, text } from 'engine_components';
+import { controller, damage, moveable, position, renderable, text } from 'engine_components';
 
 export const component_state = [
     {
@@ -43,19 +43,6 @@ export const component_state = [
     {
         type: 'component',
         opts: {
-            uid: 'animate',
-            component: {
-                fn: animate.fn,
-                select_systems: [],
-                select_components: ['action'],
-                subscriptions: [],
-                cleanup_fn: () => {}
-            }
-        }
-    },
-    {
-        type: 'component',
-        opts: {
             uid: 'text_sprite',
             component: {
                 fn: state => state,
@@ -82,38 +69,12 @@ export const component_state = [
     {
         type: 'component',
         opts: {
-            uid: 'attack',
-            component: {
-                fn: state => state,
-                select_systems: [],
-                select_components: ['position'],
-                subscriptions: ['action'],
-                cleanup_fn: () => {}
-            }
-        }
-    },
-    {
-        type: 'component',
-        opts: {
             uid: 'damage',
             component: {
                 fn: state => state,
                 select_systems: [],
                 select_components: ['position'],
                 subscriptions: ['collision'],
-                cleanup_fn: () => {}
-            }
-        }
-    },
-    {
-        type: 'component',
-        opts: {
-            uid: 'ttl',
-            component: {
-                fn: state => state,
-                select_systems: [],
-                select_components: [],
-                subscriptions: [],
                 cleanup_fn: () => {}
             }
         }

@@ -1,6 +1,26 @@
 {
-    "player": {
+    "blob": {
         "type": "image",
-        "src": "img/icon.png"
+        "src": "img/blob.png"
+    },
+    "door": {
+        "type": "image",
+        "src": "img/door.png"
+    },
+    "dungeon": {
+        "type": "image",
+        "src": "img/dungeon.png"
+    },
+    "treasure": {
+        "type": "image",
+        "src": "img/treasure.png"
+    },
+    "explorer": {
+        "type": "image",
+        "src": "img/explorer.png"
+    },
+    "treasure_hunter": {
+        "type": "image",
+        "src": "img/treasure_hunter.png"
     }
 }

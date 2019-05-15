@@ -32,18 +32,23 @@ const next_state = game_states => {
 
 export const mk_game_state = game_states => {
     const new_state = game_states.reduce((state, spec) => mk_state_dispatcher(state, spec), initial_game_state);
-    const scene_id = new_state.game.scene_id;
+    const scene_ids = game_states.filter(state => state.type === 'scene').map(state => state.opts.uid);
 
-    const systems = new_state.scenes[scene_id].systems;
-    const system_fns = ecs.get.system_fns(new_state, systems);
+    const cb = (accum, scene_id) => {
+        const systems = new_state.scenes[scene_id].systems;
+        const system_fns = ecs.get.system_fns(new_state, systems);
 
-    const components = new_state.scenes[scene_id].components;
-    const component_fns = ecs.get.component_update_fn(new_state, components);
+        const components = new_state.scenes[scene_id].components;
+        const component_fns = ecs.get.component_update_fn(new_state, components);
 
-    const update_fn = game_state => {
-        const system_state = system_fns.reduce((status, system_fn) => system_fn(status), game_state);
-        return component_fns.reduce((status, component_fn) => component_fn(status), system_state);
+        const update_fn = game_state => {
+            const system_state = system_fns.reduce((status, system_fn) => system_fn(status), game_state);
+            return component_fns.reduce((status, component_fn) => component_fn(status), system_state);
+        };
+
+        return { ...accum, [scene_id]: update_fn };
     };
+    const update_fns = scene_ids.reduce(cb, {});
 
     return {
         ...new_state,
@@ -51,7 +56,7 @@ export const mk_game_state = game_states => {
             ...new_state.game,
             update_fns: {
                 ...new_state.game.update_fns,
-                [scene_id]: update_fn
+                ...update_fns
             }
         }
     };

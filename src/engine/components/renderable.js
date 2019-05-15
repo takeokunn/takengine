@@ -6,7 +6,7 @@ const set_position = (sprite, position) => {
 
 export const mk_sprite_state = (loader, stage, img_path) => {
     return {
-        sprite: pixi.mk_sprite_from_cache(loader, stage, img_path)
+        sprite: pixi.mk_sprite(loader, stage, img_path)
     };
 };
 

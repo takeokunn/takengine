@@ -1,4 +1,4 @@
-import { audio, collision, event, input, meta, renderer, replay, tiles } from 'engine_systems';
+import { audio, collision, event, input, renderer, tiles } from 'engine_systems';
 
 export const system_state = [
     {
@@ -13,13 +13,6 @@ export const system_state = [
         opts: {
             uid: 'key_input',
             fn: input.system
-        }
-    },
-    {
-        type: 'system',
-        opts: {
-            uid: 'meta',
-            fn: meta.system
         }
     },
     {
@@ -55,13 +48,6 @@ export const system_state = [
         opts: {
             uid: 'tilemap_collision',
             fn: collision.mk_tilemap_system
-        }
-    },
-    {
-        type: 'system',
-        opts: {
-            uid: 'replay',
-            fn: replay.system
         }
     },
 ];

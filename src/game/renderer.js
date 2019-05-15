@@ -1,11 +1,11 @@
 import { pixi } from 'engine_utils';
 
-export const renderer_state = (renderer, stage) => ([
+export const renderer_state = (renderer, stages) => ([
     {
         type: 'renderer',
         opts: {
             renderer: renderer,
-            stage: stage
+            stages: stages
         }
     }
 ]);

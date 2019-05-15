@@ -155,7 +155,8 @@ export const mk_scene = (state, opts) => {
             ...state.scenes,
             [opts.uid]: {
                 systems: opts.systems,
-                components: opts.components
+                components: opts.components,
+                stage: opts.stage
             }
         }
     };
@@ -181,7 +182,7 @@ export const mk_renderer = (state, opts) => {
             ...state.game,
             rendering_engine: {
                 renderer: opts.renderer,
-                stage: opts.stage
+                stages: opts.stages
             }
         }
     };
