@@ -10,22 +10,22 @@ import { tilemap_state } from './tilemap';
 
 const mk_text = (stage, str) => {
     const style = pixi.mk_text_style({
-        fontFamily: "Futura",
+        fontFamily: 'Futura',
         fontSize: 64,
-        fill: "white"
+        fill: 'white'
     });
     const message = pixi.mk_text(str, style);
     message.x = 330;
     message.y = 250;
-    stage.addChild(message)
-}
+    stage.addChild(message);
+};
 
 export const mk_stages = () => {
     const start = new pixi.mk_stage();
     const main = new pixi.mk_stage();
     const result = new pixi.mk_stage();
-    mk_text(start, "start");
-    mk_text(result, "result");
+    mk_text(start, 'start');
+    mk_text(result, 'result');
     return { start, main, result };
 };
 

@@ -18,5 +18,5 @@ export const create = (uid, loader, resource, stage) => {
                 state: {}
             }
         ]
-    }
+    };
 };

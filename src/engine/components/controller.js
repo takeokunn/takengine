@@ -8,7 +8,7 @@ const keycode_movement = {
 const input_move = input_state => {
     const commands = ['up', 'down', 'left', 'right'];
     const input = commands.filter(key => input_state[key]).map(key => keycode_movement[key]);
-    return input.length !== 0? input[0] : {}
+    return input.length !== 0? input[0] : {};
 };
 
 export const react_to_input = (entity_id, component_state, messages) => {
@@ -20,4 +20,4 @@ export const react_to_input = (entity_id, component_state, messages) => {
         },
         events: []
     };
-}
+};

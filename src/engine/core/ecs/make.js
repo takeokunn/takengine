@@ -116,13 +116,13 @@ const mk_component_state = (game_state, component_id, entity_id, init_component_
                 }
             }
         }
-    }
+    };
 };
 
 const component_state_from_spec = entity_id => (state, component) => {
     const component_uid = component.uid;
     const component_state = component.state || {};
-    const new_state = mk_component_state(state, component_uid, entity_id, component_state)
+    const new_state = mk_component_state(state, component_uid, entity_id, component_state);
     const entity_entity_id = [...get.entities_entity_id(new_state, entity_id), component_uid];
     const comopnent_entities = [...get.component_component_id_entities(new_state, component_uid), entity_id];
     return {

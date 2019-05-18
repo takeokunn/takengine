@@ -8,7 +8,7 @@ export const component_component_id = (game_state, component_id) => {
 
 export const component_component_id_entities = (game_state, component_id) => {
     const state = game_state.components.hasOwnProperty(component_id)? game_state.components[component_id] : {};
-    return state.hasOwnProperty('entities')? state.entities : []
+    return state.hasOwnProperty('entities')? state.entities : [];
 };
 
 export const component_update_fn = (state, component_ids) => {

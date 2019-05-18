@@ -18,8 +18,8 @@ export const sprite_fn = (entity_id, component_state, messages) => {
         new_component_state: component_state,
         events: []
     };
-}
+};
 
 export const render_text = (entity_id, component_state, messages) => {
     return component_state;
-}
+};

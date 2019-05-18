@@ -5,7 +5,7 @@ export const mk = (msg, selectors) => {
         event_id: selectors[0],
         selectors: selectors,
         msg: msg
-    }
+    };
 };
 
 /**
@@ -38,5 +38,5 @@ export const clear = state => {
         events: {
             queue: []
         }
-    }
+    };
 };

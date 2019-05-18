@@ -17,8 +17,8 @@ const keyup = e => {
 };
 
 const init_input = () => {
-    document.addEventListener("keydown", keydown);
-    document.addEventListener("keyup", keyup);
+    document.addEventListener('keydown', keydown);
+    document.addEventListener('keyup', keyup);
     key_input = { ...initialize_key_input() };
 };
 

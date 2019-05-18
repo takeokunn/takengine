@@ -20,7 +20,7 @@ const mk_state = {
     current_scene: (state, opts) => ecs.make.mk_current_scene(state, opts),
     renderer: (state, opts) => ecs.make.mk_renderer(state, opts),
     tilemap: (state, opts) => tiles.mk_tiles_from_tilemap(state, opts.renderer, opts.stage, opts.loader, opts.tilemap)
-}
+};
 
 const mk_state_dispatcher = (state, spec) => mk_state[spec.type](state, spec.opts);
 
