@@ -28,7 +28,7 @@ export const mk_stages = () => {
 };
 
 export const mk_init_state = (loader, resources, renderer, stages) => ([
-    ...component_state(renderer),
+    ...component_state(resources, renderer),
     ...system_state,
     ...entity_state(loader, resources, renderer, stages),
     ...renderer_state(renderer, stages),

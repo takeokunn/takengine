@@ -1,12 +1,12 @@
-import { controller, damage, moveable, position, renderable, text } from 'engine_components';
+import { controller, position, renderable, text } from 'engine_components';
 
-export const component_state = renderer => ([
+export const component_state = (resources, renderer) => ([
     {
         type: 'component',
         opts: {
             uid: 'position',
             component: {
-                fn: position.fn(renderer),
+                fn: position.fn(resources, renderer),
                 select_systems: [],
                 select_components: ['controller'],
                 subscriptions: [],
@@ -65,31 +65,5 @@ export const component_state = renderer => ([
                 cleanup_fn: () => {}
             }
         }
-    },
-    {
-        type: 'component',
-        opts: {
-            uid: 'damage',
-            component: {
-                fn: state => state,
-                select_systems: [],
-                select_components: ['position'],
-                subscriptions: ['collision'],
-                cleanup_fn: () => {}
-            }
-        }
-    },
-    {
-        type: 'component',
-        opts: {
-            uid: 'movement',
-            component: {
-                fn: state => state,
-                select_systems: [],
-                select_components: [],
-                subscriptions: ['move_change', 'collision'],
-                cleanup_fn: () => {}
-            }
-        }
-    },
+    }
 ]);
