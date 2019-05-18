@@ -4,8 +4,8 @@ import { pixi, stats } from 'engine_utils';
 import { mk_stages, mk_init_state } from 'game';
 import manifest from './manifest.json';
 
-const WINDOW_WIDTH = 800;
-const WINDOW_HEIGHT = 600;
+const WINDOW_WIDTH = 512;
+const WINDOW_HEIGHT = 512;
 const WINDOW_BACKGROUND = 0x1099bb;
 
 const mk_middleware = game_stats => (fn, state) => stats.wrap_fps(game_stats)(fn, state);

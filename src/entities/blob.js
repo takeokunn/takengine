@@ -1,7 +1,8 @@
 import { pixi } from 'engine_utils';
 import { position, renderable, moveable } from 'engine_components';
 
-export const create = (uid, loader, resource, stage) => {
+export const create = (index, uid, loader, resource, stage) => {
+    const x = 120 + index * 50;
     return {
         uid: uid,
         components: [
@@ -11,12 +12,8 @@ export const create = (uid, loader, resource, stage) => {
             },
             {
                 uid: 'position',
-                state: position.mk_position_state(20, 20, 0, 0, 0)
+                state: position.mk_position_state(x, 120)
             },
-            {
-                uid: 'controller',
-                state: {}
-            }
         ]
     };
 };

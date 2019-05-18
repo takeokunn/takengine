@@ -5,8 +5,6 @@ import { entity_state } from './entity';
 import { renderer_state } from './renderer';
 import { scene_state } from './scene';
 import { system_state } from './system';
-import { tilemap_state } from './tilemap';
-
 
 const mk_text = (stage, str) => {
     const style = pixi.mk_text_style({
@@ -15,8 +13,8 @@ const mk_text = (stage, str) => {
         fill: 'white'
     });
     const message = pixi.mk_text(str, style);
-    message.x = 330;
-    message.y = 250;
+    message.x = 200;
+    message.y = 200;
     stage.addChild(message);
 };
 
@@ -30,10 +28,9 @@ export const mk_stages = () => {
 };
 
 export const mk_init_state = (loader, resources, renderer, stages) => ([
-    ...component_state,
+    ...component_state(renderer),
     ...system_state,
-    ...entity_state(loader, resources, stages),
+    ...entity_state(loader, resources, renderer, stages),
     ...renderer_state(renderer, stages),
     ...scene_state(stages),
-    ...tilemap_state
 ]);

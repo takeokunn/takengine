@@ -4,8 +4,8 @@
   "repository": "javascript-game-engine",
   "description": "javascript game engine",
   "scripts": {
-    "test": "eslint --fix src/**",
-    "dev": "npm run dev-webpack &  npm run dev-serve",
+    "test": "eslint src/**",
+    "dev": "npm run dev-webpack & npm run dev-serve",
     "dev-webpack": "webpack -w",
     "dev-serve": "webpack-serve --config webpack.config.js"
   },

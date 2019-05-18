@@ -1,7 +1,9 @@
 import { pixi } from 'engine_utils';
 import { position, renderable, moveable } from 'engine_components';
 
-export const create = (uid, loader, resource, stage) => {
+export const create = (uid, loader, resource, renderer, stage) => {
+    const x = 68;
+    const y = renderer.height / 2 - resource.texture.height / 2;
     return {
         uid: uid,
         components: [
@@ -11,7 +13,7 @@ export const create = (uid, loader, resource, stage) => {
             },
             {
                 uid: 'position',
-                state: position.mk_position_state(0, 0, 0, 0, 0)
+                state: position.mk_position_state(x, y)
             },
             {
                 uid: 'controller',

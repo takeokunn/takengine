@@ -1,12 +1,12 @@
 import { controller, damage, moveable, position, renderable, text } from 'engine_components';
 
-export const component_state = [
+export const component_state = renderer => ([
     {
         type: 'component',
         opts: {
             uid: 'position',
             component: {
-                fn: position.fn,
+                fn: position.fn(renderer),
                 select_systems: [],
                 select_components: ['controller'],
                 subscriptions: [],
@@ -92,4 +92,4 @@ export const component_state = [
             }
         }
     },
-];
+]);
