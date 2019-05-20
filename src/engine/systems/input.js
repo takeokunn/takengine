@@ -24,16 +24,13 @@ const init_input = () => {
 
 init_input();
 
-export const system = state => {
-    const entity_ids = ecs.get.system_system_id_entities(state, 'keyboard_input');
-    return {
-        ...state,
-        state: {
-            ...state.state,
-            system: {
-                ...state.state.system,
-                key_input: key_input
-            }
+export const system = state => ({
+    ...state,
+    state: {
+        ...state.state,
+        system: {
+            ...state.state.system,
+            key_input: key_input
         }
-    };
-};
+    }
+});

@@ -39,15 +39,8 @@ export const system_state = [
     {
         type: 'system',
         opts: {
-            uid: 'entity_collision',
-            fn: collision.mk_entity_system
+            uid: 'collision',
+            fn: collision.system
         }
-    },
-    {
-        type: 'system',
-        opts: {
-            uid: 'tilemap_collision',
-            fn: collision.mk_tilemap_system
-        }
-    },
+    }
 ];

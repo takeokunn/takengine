@@ -24,7 +24,8 @@ export const scene_state = stage => ([
             stage: stage.main,
             systems: [
                 'key_input',
-                'render'
+                'render',
+                'collision'
             ],
             components: [
                 'controller',

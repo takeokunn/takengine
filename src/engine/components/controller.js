@@ -1,8 +1,8 @@
 const keycode_movement = {
-    up: { action: 'walk', direction: 'up' },
-    down: { action: 'walk', direction: 'down' },
-    left: { action: 'walk', direction: 'left' },
-    right: { action: 'walk', direction: 'right' },
+    up: { direction: 'up' },
+    down: { direction: 'down' },
+    left: { direction: 'left' },
+    right: { direction: 'right' },
 };
 
 const input_move = input_state => {
